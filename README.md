@@ -16,9 +16,11 @@ A collection of hands-on projects and experiments exploring the power of Docker 
 
 > Multi Node Labs explore distributed setups across multiple hosts or nodes, introducing orchestration concepts using Docker Swarm, Kubernetes, or manual multi-host networking.
 
+(COMING SOON)
+
 ### Contribution
 
 Hello there! 👋 I’m glad to have you here. Contributions are always welcome to expand this collection. Whether it's fixing a bug, adding new projects, or improving documentation, your help is highly appreciated!
 
-Read the contributions guide [CONTRIBUTING](./CONTRIBUTING.md)
+Read the contributions guide here: [CONTRIBUTING.md](./CONTRIBUTING.md)
 <!-- Feel free if you want to contribute. Please read the [contributing guidelines](CONTRIBUTING.md). -->
