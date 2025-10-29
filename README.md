@@ -1,4 +1,4 @@
-# Docker Stuff
+# Container Stuffs
 
 A collection of hands-on projects and experiments exploring the power of Docker and Docker Compose. This repository serves as a learning playground to understand and implement Docker-based setups, from simple single-node configurations to more complex multi-node environments.
 
@@ -6,12 +6,14 @@ A collection of hands-on projects and experiments exploring the power of Docker 
 
 ### Single Node
 
+> Single Node Labs focus on Docker and Docker Compose setups running on a single host, ideal for learning isolated service configurations and local orchestration.
+
 - [`MySQL Master Slave`](./single-node/mysql-master-slave) - A MySQL 8 setup with master-slave replication to learn database replication concepts.
 - [`MariaDB Incremental Backup`](./single-node/mariadb-incremental-backup/) - Full and incremental backup implementation using MariaDB.
 
 ### Multiple Node
 
-(Stay tuned! Content will be updated soon.)
+> Multi Node Labs explore distributed setups across multiple hosts or nodes, introducing orchestration concepts using Docker Swarm, Kubernetes, or manual multi-host networking.
 
 ### Contribution
 
