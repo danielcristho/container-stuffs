@@ -59,7 +59,7 @@ docker exec -it mariadb_slave mysql -u root -e "SELECT * FROM demo.test;"
 To stop and remove everything cleanly:
 
 ```sh
-docker-compose down -v
+docker compose down -v
 rm -rf master/data/* slave/data/*
 ```
 
