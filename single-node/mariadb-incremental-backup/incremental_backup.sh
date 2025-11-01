@@ -30,3 +30,7 @@ docker exec mariadb_incremental sh -c "$full_backup"
 incremental_backup="mariabackup --backup --target-dir=/var/mariadb/inc1/ --incremental-basedir=/var/mariadb/backup/ --user=$MARIADB_USER --password=$MARIADB_PASSWORD"
 
 docker exec mariadb_incremental sh -c "$incremental_backup"
+
+# Check backup consistency
+docker exec mariadb_incremental sh -c "cat /var/mariadb/backup/xtrabackup_checkpoints"
+docker exec mariadb_incremental sh -c "cat /var/mariadb/inc1/xtrabackup_checkpoints"
