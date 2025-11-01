@@ -9,10 +9,10 @@ else
     exit 1
 fi
 
-docker-compose down -v
+docker compose down -v
 rm -rf ./master/data/*
 rm -rf ./slave/data/*
-docker-compose up --build -d
+docker compose up --build -d
 
 MASTER_HOST=10.0.1.10
 SLAVE_HOST=10.0.1.11
