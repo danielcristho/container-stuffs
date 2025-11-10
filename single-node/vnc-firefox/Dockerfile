@@ -23,4 +23,6 @@ ENV RESOLUTION=1920x1080x24
 
 COPY supervisord.conf /etc/supervisord.conf
 
+COPY auth.json /etc/novnc/auth.json
+
 CMD ["supervisord", "-c", "/etc/supervisord.conf", "-n"]
