@@ -1,0 +1,9 @@
+version: '3.8'
+services:
+  vnc_firefox:
+    build: .
+    ports:
+      - "5901:5900"
+      - "6080:6080"
+
+    container_name: vnc_firefox
