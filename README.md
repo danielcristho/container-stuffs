@@ -8,9 +8,10 @@ A collection of hands-on projects and experiments exploring the power of Docker 
 
 > Single Node Labs focus on Docker and Docker Compose setups running on a single host, ideal for learning isolated service configurations and local orchestration.
 
-- [`MySQL Master Slave Replication`](./single-node/mysql-master-slave) - A MySQL 8 setup with master-slave replication to learn database replication concepts.
 - [`MariaDB Incremental Backup`](./single-node/mariadb-incremental-backup/) - Full and incremental backup implementation using MariaDB.
 - [`MariaDB Master Slave Replication`](./single-node/mariadb-master-slave/README.md) - A Mariadb 10 setup with master-slave replication to learn database replication concepts.
+- [`MySQL Master Slave Replication`](./single-node/mysql-master-slave) - A MySQL 8 setup with master-slave replication to learn database replication concepts.
+- [`VNC Firefox`](./single-node/vnc-firefox/README.md) - A containerized Firefox accessible via VNC or noVNC. Learn how GUI applications run inside containers using lightweight window managers.
 
 ### Multiple Node
 
