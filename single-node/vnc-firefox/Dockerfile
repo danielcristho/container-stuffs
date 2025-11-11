@@ -1,17 +1,18 @@
 FROM alpine:edge
 
 RUN apk add --no-cache \
-    xfce4 \
     faenza-icon-theme \
     firefox \
     fluxbox \
+    xfce4 \
     xvfb \
     x11vnc \
     novnc \
     supervisor \
-    bash
+    bash \
+    net-tools
 
-# Install noVNC & websockify
+# Install noVNC & websockify from source code
 RUN apk add --no-cache git python3 py3-pip \
     && rm -rf /usr/share/novnc \
     && git clone https://github.com/novnc/noVNC.git /usr/share/novnc \
@@ -21,8 +22,15 @@ RUN apk add --no-cache git python3 py3-pip \
 ENV DISPLAY=:1
 ENV RESOLUTION=1920x1080x24
 
+# Set vnc password
+ARG VNC_PASS=dummmypass
+
+# Create vnc password file
+RUN mkdir -p /root/.vnc && \
+    x11vnc -storepasswd "$VNC_PASS" /root/.vnc/passwd
+
 COPY supervisord.conf /etc/supervisord.conf
 
-COPY auth.json /etc/novnc/auth.json
+EXPOSE 5900 6080
 
 CMD ["supervisord", "-c", "/etc/supervisord.conf", "-n"]
