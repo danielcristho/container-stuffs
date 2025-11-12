@@ -1,1 +1,64 @@
-version:
+version: '3.8'
+
+services:
+  master:
+    build: ./master
+    container_name: postgres_master
+    restart: unless-stopped
+    ports:
+      - "5433:5432"
+    volumes:
+      - master_data:/var/lib/postgresql/data
+      - ./master/postgresql.conf:/etc/postgresql/postgresql.conf
+      - ./master/pg_hba.conf:/etc/postgresql/pg_hba.conf
+    
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    networks:
+        postgres_net:
+            ipv4_address: 10.0.2.10
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+  
+  slave:
+    build: ./slave
+    container_name: postgres_slave
+    restart: unless-stopped
+    ports:
+      - "5434:5432"
+    volumes:
+      - slave_data:/var/lib/postgresql/data
+      - ./slave/postgresql.conf:/etc/postgresql/postgresql.conf
+      - ./slave/pg_hba.conf:/etc/postgresql/pg_hba.conf
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - REPLICATION_USER=${REPLICATION_USER}
+      - REPLICATION_PASSWORD=${REPLICATION_PASSWORD}
+    networks:
+        postgres_net:
+            ipv4_address: 10.0.2.11
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+networks:
+    postgres_net:
+        ipam:
+            config:
+                - subnet: 10.0.2.0/24
+        external: false
+
+volumes:
+  master_data:
+  slave_data:
