@@ -52,7 +52,7 @@ localhost:5901
 Enter password:
 
 ```bash
-dummmypass
+dummypass
 ```
 
 Or you can access the firefox browser using a Web Browser (noVNC). Just open your browser and visit:

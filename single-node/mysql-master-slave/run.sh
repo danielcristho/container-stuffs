@@ -9,13 +9,13 @@ else
     exit 1
 fi
 
+MASTER_HOST=10.0.1.10
+SLAVE_HOST=10.0.1.11
+
 docker compose down -v
 rm -rf ./master/data/*
 rm -rf ./slave/data/*
 docker compose up --build -d
-
-MASTER_HOST=10.0.1.10
-SLAVE_HOST=10.0.1.11
 
 while ! mysqladmin ping -h $MASTER_HOST --silent; do
 	sleep 1

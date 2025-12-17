@@ -23,7 +23,7 @@ ENV DISPLAY=:1
 ENV RESOLUTION=1920x1080x24
 
 # Set vnc password
-ARG VNC_PASS=dummmypass
+ARG VNC_PASS=dummypass
 
 # Create vnc password file
 RUN mkdir -p /root/.vnc && \
