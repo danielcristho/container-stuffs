@@ -21,9 +21,11 @@ services:
             database_net:
                 ipv4_address: 10.0.2.10
         healthcheck:
-            test: "mysqladmin ping -h 10.0.2.10"
-            interval: 2s
-            retries: 20
+            test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+            interval: 10s
+            timeout: 5s
+            retries: 3
+            start_period: 1m
 
 networks:
     database_net:
