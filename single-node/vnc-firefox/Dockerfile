@@ -1,33 +1,36 @@
-FROM alpine:3.16
+FROM alpine:edge
 
-ENV DISPLAY :1
-# alternative 1024x768x16
-ENV RESOLUTION 1920x1080x24
-
-# setup desktop environment (xfce4), display server (xvfb), vnc server (x11vnc)
 RUN apk add --no-cache \
-    xfce4 \
     faenza-icon-theme \
+    firefox \
+    fluxbox \
+    xfce4 \
     xvfb \
-    x11vnc
+    x11vnc \
+    novnc \
+    supervisor \
+    bash \
+    net-tools
 
-# setup novnc
-RUN apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing \
-    novnc && \
-    ln -s /usr/share/novnc/vnc.html /usr/share/novnc/index.html
+# Install noVNC & websockify from source code
+RUN apk add --no-cache git python3 py3-pip \
+    && rm -rf /usr/share/novnc \
+    && git clone https://github.com/novnc/noVNC.git /usr/share/novnc \
+    && git clone https://github.com/novnc/websockify.git /usr/share/novnc/utils/websockify \
+    && ln -sf /usr/share/novnc/vnc.html /usr/share/novnc/index.html
 
-# required for command expansion
-RUN apk add --no-cache \
-    bash
-SHELL ["/bin/bash", "-c"]
+ENV DISPLAY=:1
+ENV RESOLUTION=1920x1080x24
 
-# setup supervisor
-COPY supervisor /tmp
-RUN apk add --no-cache supervisor && \
-    echo_supervisord_conf > /etc/supervisord.conf && \
-    sed -i -r -f /tmp/supervisor.sed /etc/supervisord.conf && \
-    mkdir -pv /etc/supervisor/conf.d /var/log/{novnc,x11vnc,xfce4,xvfb} && \
-    mv /tmp/supervisor-*.ini /etc/supervisor/conf.d/ && \
-    rm -fr /tmp/supervisor*
+# Set vnc password
+ARG VNC_PASS=dummmypass
+
+# Create vnc password file
+RUN mkdir -p /root/.vnc && \
+    x11vnc -storepasswd "$VNC_PASS" /root/.vnc/passwd
+
+COPY supervisord.conf /etc/supervisord.conf
+
+EXPOSE 5900 6080
 
 CMD ["supervisord", "-c", "/etc/supervisord.conf", "-n"]
